@@ -1,29 +1,55 @@
-<script>
+<html>
+  <body>
+    <p id="Array"></p>
+    <p id="num"></p>
+    p id="somma"></p>
+    <p id="media"></p>
+    <p id="massimo"></p>
+    <p id="mininmo"></p>
+    <p id="stmpaMaggioriDi50"></p>
+    <script>
 
-let numeri = [];
-for (let i = 0; i < 100; i++) {
-let num = Math.random() * 200 - 100; 
-  numeri.push(num);
-}
-let somma = 0;
-for (let i = 0; i < numeri.length; i++) {
-  somma += numeri[i];
-}
-let media = somma / numeri.length;
+      let numeri = [];
+      for (let i = 0; i < 100; i++) {
+        let num = Math.random() * 200 - 100; 
+        numeri.push(num);
+      }
+      let somma = 0;
+      for (let i = 0; i < numeri.length; i++) {
+        somma += numeri[i];
+      }
+      let media = somma / numeri.length;
 
-let massimo = Math.max(...numeri);
-let minimo = Math.min(...numeri);
+      let massimo = Math.max(...numeri);
+      let minimo = Math.min(...numeri);
 
-let maggioriDi50 = [];
-for (let i = 0; i < numeri.length; i++) {
-  if (numeri[i] > 50) {
-    maggioriDi50.push(numeri[i]);
-  }
-}
-console.log("Array completo:", numeri);
-console.log("Media:", media);
-console.log("Massimo:", massimo);
-console.log("Minimo:", minimo);
-console.log("Numeri maggiori di 50:", maggioriDi50);
+      let maggioriDi50 = [];
+      for (let i = 0; i < numeri.length; i++) {
+      if (numeri[i] > 50) {
+        maggioriDi50.push(numeri[i]);
+      }
+    }
+    let stampaArray = document.getElementbyId("Array");
+    let stampanum = document.getElementbyId("num");
+    let stampasomma = document.getElementbyId("somma");
+    let stmpaMedia = document.getElementbyId("media");
+    let stmpaMassimo = document.getElementbyId("massimo");
+    let stmpaMinimo = document.getElementbyId("mininmo");
+    let stmpaMaggioriDi50 = document.getElementbyId("maggioriDi50");
+    stampaArray.innerHTML = "Array completo: " + numeri;
+    stampanum.innerHTML = "numeri: " + num;
+    stampasomma.innerHTML = "somma: " + somma;
+    stmpaMedia.innerHTML = "media: " + media;
+    stmpaMassimo.innerHTML = "Array massimo: " + massimo;
+    stmpaMinimo.innerHTML = "Array minimo: " + minimo;
+    stmpaMaggioriDi50.innerHTML = "Array completo: " + maggioriDi50;
+    console.log("Array completo:", numeri);
+    console.log("Media:", media);
+    console.log("Massimo:", massimo);
+    console.log("Minimo:", minimo);
+    console.log("Numeri maggiori di 50:", maggioriDi50);
 
-</script>
+  </script>
+
+  </body>
+</html>
