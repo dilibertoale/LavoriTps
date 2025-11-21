@@ -1,49 +1,34 @@
 <!DOCTYPE html>
-<head>
-  <title>Anagrafica Utente</title>
-   <input type="text" id="nome">
-  <input type="text" id="cognome">
-  <input type="text" id="dataDiNascita">
-  <input type="text" id="indirizzo">
-  <input type="text" id="citta">
-  <input type="date" id="cap">
-
-  <button type="button" onclick="mostraAnagrafica()">Invia</button>
-
-  <h3>Risultato:</h3>
-  <div id="output"></div>
-
-  <script>
-    function mostraAnagrafica() {
-      var nome = document.getElementById("nome").value;
-      var cognome = document.getElementById("cognome").value;
-      var indirizzo = document.getElementById("indirizzo").value;
-      var citta = document.getElementById("citta").value;
-      var cap = document.getElementById("cap").value;
-      var data = document.getElementById("dataNascita").value;
-
-      var anno = new Date(data).getFullYear();
-
-      var generazione = "";
-
-      if (anno >= 1901 && anno <= 1927) generazione = "Greatest Generation";
-      else if (anno >= 1928 && anno <= 1945) generazione = "Generazione Silenziosa";
-      else if (anno >= 1946 && anno <= 1964) generazione = "Baby Boomers";
-      else if (anno >= 1965 && anno <= 1980) generazione = "Generazione X";
-      else if (anno >= 1981 && anno <= 1996) generazione = "Millennials";
-      else if (anno >= 1997 && anno <= 2012) generazione = "Generazione Z";
-      else if (anno >= 2013) generazione = "Generazione Alpha";
-      else generazione = "Anno non valido";
-
-      document.getElementById("output").innerHTML =
-        "<b>Nome:</b> " + nome + "<br>" +
-        "<b>Cognome:</b> " + cognome + "<br>" +
-        "<b>Indirizzo:</b> " + indirizzo + "<br>" +
-        "<b>Città:</b> " + citta + "<br>" +
-        "<b>CAP:</b> " + cap + "<br>" +
-        "<b>Anno di nascita:</b> " + anno + "<br>" +
-        "<b>Generazione:</b> " + generazione;
-    }
-  </script>
+<head›
+‹title› Utente e Generazione ‹/title>
+‹input type="text" id="nome">
+‹input type="text" id="cognome">
+‹input type="date" id="dataNascita">
+‹input type="date" id="indirizzo"›
+‹input type="date" id="citta"›
+‹input type="date" id="cap">
+‹button type="button" onclick-"calcolaGenerazione()">Invia</button>
+</form>
+‹div id="risultato"></div>
+<script>
+function calcolagenerazione () {
+let nome = document.getElementById("nome").value;
+Let cognome = document.getElementByld("cognome").value;
+let indirizzo = document.getElementById("indirizzo").value;
+let citta = document.getElementByld("citta").value;
+let cap = document.getElementById("cap").value;
+let dataNascita = new Date(document.getElementById("dataNascita").value);
+let anno = dataNascita.getfullYearO);
+let eta = new Date(). getFullYear() - anno;
+if (anno >= 2013) generazione = "Generazione Alpha";
+else if (anno >= 1997) generazione = "Generazione Z";
+else if (anno = 1981) generazione = "Millenials";
+else if (anno >= 1965) generazione = "Generazione X";
+else if (anno >= 1946) generazione = "Baby Boomens";
+else if (anno ›= 1928) generazione = "Generazione Silenziosa";
+else if (anno >= 1901) generazione = "Greatest Genenation";
+else generazione = "Pre-1900 (non classificata)";*/
+}
+</script>
 </body>
 </html>
