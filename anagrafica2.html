@@ -6,7 +6,7 @@
 <body>
   <h2>Inserisci i tuoi dati:</h2>
 
-<!-- Campi di testo -->
+
 <input type="text" id="nome" placeholder="Nome"><br>
 <input type="text" id="cognome" placeholder="Cognome"><br>
 <input type="text" id="indirizzo" placeholder="Indirizzo"><br>
@@ -14,13 +14,13 @@
 <input type="text" id="cap" placeholder="CAP"><br>
 <input type="date" id="dataNascita"><br><br>
 
-<!-- Radiobutton: sesso -->
+
 <h3>Sesso:</h3>
 <label><input type="radio" name="sesso" value="Maschio"> Maschio</label><br>
 <label><input type="radio" name="sesso" value="Femmina"> Femmina</label><br>
 <label><input type="radio" name="sesso" value="Altro"> Altro</label><br><br>
 
-<!-- Checkbox: mezzi -->
+
 <h3>Mezzi posseduti:</h3>
 <label><input type="checkbox" class="mezzo" value="Auto"> Auto</label><br>
 <label><input type="checkbox" class="mezzo" value="Moto"> Moto</label><br>
@@ -28,7 +28,7 @@
 <label><input type="checkbox" class="mezzo" value="Cavallo"> Cavallo</label><br>
 <label><input type="checkbox" class="mezzo" value="Deltaplano"> Deltaplano</label><br><br>
 
-<!-- Combobox: provincia -->
+
 <h3>Provincia:</h3>
 <select id="provincia">
   <option value="MI">Milano (MI)</option>
@@ -38,9 +38,9 @@
   <option value="TO">Torino (TO)</option>
 </select><br><br>
 
-<!-- List box: materie -->
-<h3>Materie preferite (Ctrl+Click per selezioni multiple):</h3>
-<select id="materie" multiple size="5">
+
+<h3>Materie preferite (Ctrl + click per selezioni multiple):</h3>
+<select id="materie" multiple size="6">
   <option>Italiano</option>
   <option>Storia</option>
   <option>Matematica</option>
@@ -62,26 +62,11 @@
     let citta = document.getElementById("citta").value;
     let cap = document.getElementById("cap").value;
     let data = document.getElementById("dataNascita").value;
+
+    
     let anno = new Date(data).getFullYear();
 
-    // Sesso selezionato
-    let sesso = document.querySelector('input[name="sesso"]:checked');
-    sesso = sesso ? sesso.value : "Non specificato";
-
-    // Checkbox: mezzi
-    let mezzi = [];
-    document.querySelectorAll(".mezzo:checked").forEach(m => mezzi.push(m.value));
-    mezzi = mezzi.length > 0 ? mezzi.join(", ") : "Nessuno";
-
-    // Combobox: provincia
-    let provincia = document.getElementById("provincia").value;
-
-    // List box: materie multiple
-    let materieSelect = document.getElementById("materie");
-    let materie = [...materieSelect.selectedOptions].map(opt => opt.text);
-    materie = materie.length > 0 ? materie.join(", ") : "Nessuna";
-
-    // Calcolo della generazione
+   
     let generazione = "";
     if (anno >= 1901 && anno <= 1927) generazione = "Greatest Generation";
     else if (anno >= 1928 && anno <= 1945) generazione = "Generazione Silenziosa";
@@ -92,6 +77,26 @@
     else if (anno >= 2013) generazione = "Generazione Alpha";
     else generazione = "Anno non valido";
 
+ 
+    let sessoSel = document.querySelector('input[name="sesso"]:checked');
+    let sesso = sessoSel ? sessoSel.value : "Non specificato";
+
+    
+    let mezzi = [];
+    document.querySelectorAll(".mezzo:checked").forEach(m => mezzi.push(m.value));
+    if (mezzi.length === 0) mezzi = "Nessuno";
+    else mezzi = mezzi.join(", ");
+
+   
+    let provincia = document.getElementById("provincia").value;
+
+    
+    let materieEl = document.getElementById("materie");
+    let materie = [...materieEl.selectedOptions].map(o => o.text);
+    if (materie.length === 0) materie = "Nessuna";
+    else materie = materie.join(", ");
+
+    
     document.getElementById("output").innerHTML =
       "<b>Nome:</b> " + nome + "<br>" +
       "<b>Cognome:</b> " + cognome + "<br>" +
