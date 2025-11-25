@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Anagrafica Utente</title>
+</head>
+<body>
+  <h2>Inserisci i tuoi dati:</h2>
+
+<!-- Campi di testo -->
+<input type="text" id="nome" placeholder="Nome"><br>
+<input type="text" id="cognome" placeholder="Cognome"><br>
+<input type="text" id="indirizzo" placeholder="Indirizzo"><br>
+<input type="text" id="citta" placeholder="Città"><br>
+<input type="text" id="cap" placeholder="CAP"><br>
+<input type="date" id="dataNascita"><br><br>
+
+<!-- Radiobutton: sesso -->
+<h3>Sesso:</h3>
+<label><input type="radio" name="sesso" value="Maschio"> Maschio</label><br>
+<label><input type="radio" name="sesso" value="Femmina"> Femmina</label><br>
+<label><input type="radio" name="sesso" value="Altro"> Altro</label><br><br>
+
+<!-- Checkbox: mezzi -->
+<h3>Mezzi posseduti:</h3>
+<label><input type="checkbox" class="mezzo" value="Auto"> Auto</label><br>
+<label><input type="checkbox" class="mezzo" value="Moto"> Moto</label><br>
+<label><input type="checkbox" class="mezzo" value="Bici"> Bici</label><br>
+<label><input type="checkbox" class="mezzo" value="Cavallo"> Cavallo</label><br>
+<label><input type="checkbox" class="mezzo" value="Deltaplano"> Deltaplano</label><br><br>
+
+<!-- Combobox: provincia -->
+<h3>Provincia:</h3>
+<select id="provincia">
+  <option value="MI">Milano (MI)</option>
+  <option value="VA">Varese (VA)</option>
+  <option value="NA">Napoli (NA)</option>
+  <option value="RM">Roma (RM)</option>
+  <option value="TO">Torino (TO)</option>
+</select><br><br>
+
+<!-- List box: materie -->
+<h3>Materie preferite (Ctrl+Click per selezioni multiple):</h3>
+<select id="materie" multiple size="5">
+  <option>Italiano</option>
+  <option>Storia</option>
+  <option>Matematica</option>
+  <option>Informatica</option>
+  <option>TPSIT</option>
+  <option>Inglese</option>
+</select><br><br>
+
+<button onclick="mostraAnagrafica()">Invia</button>
+
+<h3>Risultato:</h3>
+<div id="output"></div>
+
+<script>
+  function mostraAnagrafica() {
+    let nome = document.getElementById("nome").value;
+    let cognome = document.getElementById("cognome").value;
+    let indirizzo = document.getElementById("indirizzo").value;
+    let citta = document.getElementById("citta").value;
+    let cap = document.getElementById("cap").value;
+    let data = document.getElementById("dataNascita").value;
+    let anno = new Date(data).getFullYear();
+
+    // Sesso selezionato
+    let sesso = document.querySelector('input[name="sesso"]:checked');
+    sesso = sesso ? sesso.value : "Non specificato";
+
+    // Checkbox: mezzi
+    let mezzi = [];
+    document.querySelectorAll(".mezzo:checked").forEach(m => mezzi.push(m.value));
+    mezzi = mezzi.length > 0 ? mezzi.join(", ") : "Nessuno";
+
+    // Combobox: provincia
+    let provincia = document.getElementById("provincia").value;
+
+    // List box: materie multiple
+    let materieSelect = document.getElementById("materie");
+    let materie = [...materieSelect.selectedOptions].map(opt => opt.text);
+    materie = materie.length > 0 ? materie.join(", ") : "Nessuna";
+
+    // Calcolo della generazione
+    let generazione = "";
+    if (anno >= 1901 && anno <= 1927) generazione = "Greatest Generation";
+    else if (anno >= 1928 && anno <= 1945) generazione = "Generazione Silenziosa";
+    else if (anno >= 1946 && anno <= 1964) generazione = "Baby Boomers";
+    else if (anno >= 1965 && anno <= 1980) generazione = "Generazione X";
+    else if (anno >= 1981 && anno <= 1996) generazione = "Millennials";
+    else if (anno >= 1997 && anno <= 2012) generazione = "Generazione Z";
+    else if (anno >= 2013) generazione = "Generazione Alpha";
+    else generazione = "Anno non valido";
+
+    document.getElementById("output").innerHTML =
+      "<b>Nome:</b> " + nome + "<br>" +
+      "<b>Cognome:</b> " + cognome + "<br>" +
+      "<b>Indirizzo:</b> " + indirizzo + "<br>" +
+      "<b>Città:</b> " + citta + "<br>" +
+      "<b>CAP:</b> " + cap + "<br>" +
+      "<b>Sesso:</b> " + sesso + "<br>" +
+      "<b>Mezzi posseduti:</b> " + mezzi + "<br>" +
+      "<b>Provincia:</b> " + provincia + "<br>" +
+      "<b>Materie preferite:</b> " + materie + "<br>" +
+      "<b>Anno di nascita:</b> " + anno + "<br>" +
+      "<b>Generazione:</b> " + generazione;
+}
+</script>
+
+</body>
+</html>
