@@ -44,6 +44,13 @@ for (let i = 0; i < checkboxMezzi.length; i++) {
     }
 }
 
+    let mezziOutput;
+
+  if (mezzi.length === 0) {
+    mezziOutput = "Nessuno"
+  } else {
+    mezziOutput = mezzi.join(",")
+  }
 
 
        let provincia = document.getElementById("provincia").value;
