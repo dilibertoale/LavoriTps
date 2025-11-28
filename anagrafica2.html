@@ -2,6 +2,86 @@
 <html>
 <head>
 <title>Anagrafica Utente</title>
+<script>
+  function mostraAnagrafica() {
+ 
+    let nome = document.getElementById("nome").value;
+    let cognome = document.getElementById("cognome").value;
+    let indirizzo = document.getElementById("indirizzo").value;
+    let citta = document.getElementById("citta").value;
+    let cap = document.getElementById("cap").value;
+    let data = document.getElementById("dataNascita").value;
+
+    
+    let anno = new Date(data).getFullYear();
+
+   
+    let generazione = "";
+    if (anno >= 1901 && anno <= 1927) generazione = "Greatest Generation";
+    else if (anno >= 1928 && anno <= 1945) generazione = "Generazione Silenziosa";
+    else if (anno >= 1946 && anno <= 1964) generazione = "Baby Boomers";
+    else if (anno >= 1965 && anno <= 1980) generazione = "Generazione X";
+    else if (anno >= 1981 && anno <= 1996) generazione = "Millennials";
+    else if (anno >= 1997 && anno <= 2012) generazione = "Generazione Z";
+    else if (anno >= 2013) generazione = "Generazione Alpha";
+    else generazione = "Anno non valido";
+
+ 
+    let sesso = "Non specificato";
+    let s = document.getElementsByName("sesso");
+    for (let i = 0; i < s.length; i++) {
+        if (s[i].checked) {
+            sesso = s[i].value;
+            break; 
+        }
+    }
+
+    let mezzi = [];
+let checkboxMezzi = document.getElementsByName("nomeCheckbox"); 
+for (let i = 0; i < checkboxMezzi.length; i++) {
+    if (checkboxMezzi[i].checked) {
+        mezzi.push(checkboxMezzi[i].value);
+    }
+}
+
+
+
+       let provincia = document.getElementById("provincia").value;
+
+    
+   
+    let materie = [];
+    let materie = document.getElementById("materie");
+    for (let i = 0; i < materie.options.length; i++) {
+        if (materie.options[i].selected) {
+            materie.push(materie.options[i].text);
+        }
+    }
+   
+   let materieOutput;
+
+if (materie.length === 0) {
+      materieOutput = "Nessuna";
+} else {
+    materieOutput = materie.join(", ");
+}
+
+
+   
+    document.getElementById("output").innerHTML =
+      "<b>Nome:</b> " + nome + "<br>" +
+      "<b>Cognome:</b> " + cognome + "<br>" +
+      "<b>Indirizzo:</b> " + indirizzo + "<br>" +
+      "<b>Città:</b> " + citta + "<br>" +
+      "<b>CAP:</b> " + cap + "<br>" +
+      "<b>Sesso:</b> " + sesso + "<br>" +
+      "<b>Mezzi posseduti:</b> " + mezziOutput + "<br>" + 
+      "<b>Provincia:</b> " + provincia + "<br>" +
+      "<b>Materie preferite:</b> " + materieOutput + "<br>" + 
+      "<b>Anno di nascita:</b> " + anno + "<br>" +
+      "<b>Generazione:</b> " + generazione;
+}
+</script>
 </head>
 <body>
   <h2>Inserisci i tuoi dati:</h2>
@@ -54,63 +134,7 @@
 <h3>Risultato:</h3>
 <div id="output"></div>
 
-<script>
-  function mostraAnagrafica() {
-    let nome = document.getElementById("nome").value;
-    let cognome = document.getElementById("cognome").value;
-    let indirizzo = document.getElementById("indirizzo").value;
-    let citta = document.getElementById("citta").value;
-    let cap = document.getElementById("cap").value;
-    let data = document.getElementById("dataNascita").value;
-
-    
-    let anno = new Date(data).getFullYear();
-
-   
-    let generazione = "";
-    if (anno >= 1901 && anno <= 1927) generazione = "Greatest Generation";
-    else if (anno >= 1928 && anno <= 1945) generazione = "Generazione Silenziosa";
-    else if (anno >= 1946 && anno <= 1964) generazione = "Baby Boomers";
-    else if (anno >= 1965 && anno <= 1980) generazione = "Generazione X";
-    else if (anno >= 1981 && anno <= 1996) generazione = "Millennials";
-    else if (anno >= 1997 && anno <= 2012) generazione = "Generazione Z";
-    else if (anno >= 2013) generazione = "Generazione Alpha";
-    else generazione = "Anno non valido";
-
- 
-    let sessoSel = document.querySelector('input[name="sesso"]:checked');
-    let sesso = sessoSel ? sessoSel.value : "Non specificato";
-
-    
-    let mezzi = [];
-    document.querySelectorAll(".mezzo:checked").forEach(m => mezzi.push(m.value));
-    if (mezzi.length === 0) mezzi = "Nessuno";
-    else mezzi = mezzi.join(", ");
-
-   
-    let provincia = document.getElementById("provincia").value;
-
-    
-    let materieEl = document.getElementById("materie");
-    let materie = [...materieEl.selectedOptions].map(o => o.text);
-    if (materie.length === 0) materie = "Nessuna";
-    else materie = materie.join(", ");
-
-    
-    document.getElementById("output").innerHTML =
-      "<b>Nome:</b> " + nome + "<br>" +
-      "<b>Cognome:</b> " + cognome + "<br>" +
-      "<b>Indirizzo:</b> " + indirizzo + "<br>" +
-      "<b>Città:</b> " + citta + "<br>" +
-      "<b>CAP:</b> " + cap + "<br>" +
-      "<b>Sesso:</b> " + sesso + "<br>" +
-      "<b>Mezzi posseduti:</b> " + mezzi + "<br>" +
-      "<b>Provincia:</b> " + provincia + "<br>" +
-      "<b>Materie preferite:</b> " + materie + "<br>" +
-      "<b>Anno di nascita:</b> " + anno + "<br>" +
-      "<b>Generazione:</b> " + generazione;
-}
-</script>
 
 </body>
 </html>
+
