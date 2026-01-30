@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Anagrafica Utente</title>
+
+</head>
+<body>
+  <h2>Inserisci Anagrafica Utente</h2>
+  <form id="anagraficaForm">
+    <label>Nome:
+      <input type="text" id="nome" required>
+    </label>
+
+    <label>Cognome:
+      <input type="text" id="cognome" required>
+    </label>
+    <label>sesso:</label><br>
+        <input type="radio" name="sesso" value="maschio">
+  <label for="rosso">maschio</label><br>
+        <input type="radio" name="sesso" value="femmina">
+  <label for="verde">femmina</label><br>
+        <input type="radio" name="sesso" value="altro">
+  <label for="blu">altro</label><br>
+    <label>Indirizzo:
+      <input type="text" id="indirizzo" required>
+    </label>
+<input type="checkbox" id="box1" name="auto" value="auto" onclick="onClickHandler(document.getElementById('box1').value)">
+<label for="vehicle1"> ho un auto</label>
+<input type="checkbox" id="box2" name="bici" value="bici" onclick="onClickHandler(document.getElementById('box2').value)">
+<label for="vehicle2"> ho una bici</label>
+<input type="checkbox" id="box3" name="cavallo" value="cavallo" onclick="onClickHandler(document.getElementById('box3').value)">
+<label for="vehicle3"> ho un cavallo</label>
+<select name="provincia">
+    <option value="milano">milano</option>
+    <option value="torino">torino</option>
+    <option value="napoli">napoli</option>
+    
+</select>
+<select name="materie_preferite" id="materie" multiple>
+        <option value="matematica">Matematica</option>
+        <option value="inglese">inglese</option>
+        <option value="storia">Storia</option>
+    </select>
+    <label>Città:
+      <input type="text" id="citta" required>
+    </label>
+
+    <label>CAP:
+      <input type="text" id="cap" required>
+    </label>
+
+    <label>Data di nascita:
+      <input type="date" id="dataNascita" required>
+    </label>
+
+    <button type="button" onclick="calcolaGenerazione()">Invia</button>
+  </form>
+
+  <div class="output" id="risultato"></div>
+
+  <script>
+    function calcolaGenerazione() {
+      nome = document.getElementById('nome').value;
+      cognome = document.getElementById('cognome').value;
+      indirizzo = document.getElementById('indirizzo').value;
+      citta = document.getElementById('citta').value;
+      cap = document.getElementById('cap').value;
+      dataNascita = document.getElementById('dataNascita').value;
+      sesso = document.querySelector('input[name="sesso"]:checked');
+      sessosel=sesso.value;
+      mezzo = document.querySelectorAll('input[type="checkbox"]:checked');
+      let mezziSelezionati = [];
+      mezzo.forEach(checkbox => {
+      mezziSelezionati.push(checkbox.value);
+      });
+      let outputMezzi = mezziSelezionati.join();
+      provincia=document.querySelector('select[name="provincia"]').value;
+
+
+
+
+
+
+annoNascita = new Date(dataNascita).getFullYear(); 
+      eta = new Date().getFullYear() - annoNascita; 
+
+      generazione = '';
+      
+      switch(true){
+        case annoNascita >= 2013:
+          generazione = 'Generazione Alpha';
+          break;
+        case annoNascita >= 1997:
+          generazione = 'Generazione Z';
+          break;
+        case annoNascita >= 1981:
+          generazione = 'Millennials';
+          break;
+        case annoNascita >= 1965:
+          generazione = 'Generazione X';
+          break;
+        case annoNascita >= 1946:
+          generazione = 'Baby Boomers';
+          break;
+        case annoNascita >= 1928:
+          generazione = 'Generazione Silenziosa';
+          break;
+
+        case annoNascita >= 1908:
+          generazione = 'Greatest Generation';
+          break;
+        default:
+          generazione = 'Pre-1908 (non classificata)';
+        break
+      }
+
+      document.getElementById('outnome').innerHTML= nome;
+      document.getElementById('outcognome').innerHTML= cognome;
+      document.getElementById('outindirizzo').innerHTML= indirizzo;
+      document.getElementById('outcitta').innerHTML= citta;
+      document.getElementById('outcap').innerHTML= cap;
+      document.getElementById('outdatanascita').innerHTML= dataNascita;
+      document.getElementById('outsesso').innerHTML= sessosel;
+      document.getElementById('outprovincia').innerHTML=provincia;
+      document.getElementById('outmezzi').innerHTML=outputMezzi;
+      
+
+      
+    }
+  </script>
+  <div id="outnome"></div>
+  <div id="outcognome"></div>
+  <div id="outindirizzo"></div>
+  <div id="outcitta"></div>
+  <div id="outcap"></div>
+  <div id="outdatanascita"></div>
+  <div id="outsesso"></div>
+  <div id="outmezzi"></div>
+    <div id="outprovincia"></div>
+</body>
+</html>
