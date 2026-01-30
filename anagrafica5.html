@@ -17,7 +17,7 @@
 </head>
 <body>
 
-  <!-- SEZIONE 1: INPUT DATI -->
+
   <div class="sezione">
     <h2>Inserisci Anagrafica Utente</h2>
     <form id="anagraficaForm">
@@ -54,7 +54,6 @@
     </form>
   </div>
 
-  <!-- SEZIONE 2: OUTPUT TABELLA -->
   <div class="sezione">
     <h2>Tabella Utenti Registrati (da LocalStorage)</h2>
     <table id="tabellaUtenti">
@@ -76,14 +75,21 @@
   </div>
 
   <script>
-    // Funzione per salvare nel LocalStorage
+  
     function salvaDati() {
-      // Recupero i checkbox selezionati
-      let mezzi = Array.from(document.querySelectorAll('input[name="mezzo"]:checked'))
-                       .map(cb => cb.value)
-                       .join(', ');
+   
+let tuttiIMezzi = document.getElementsByName("mezzo");
+let listaMezzi = [];
+for (let i = 0; i < tuttiIMezzi.length; i++) {
+    if (tuttiIMezzi[i].checked) {
+        listaMezzi.push(tuttiIMezzi[i].value);
+    }
+}
+let mezzi = listaMezzi.join(", ");
 
-      // Creo l'oggetto utente
+
+
+  
       const nuovoUtente = {
         nome: document.getElementById('nome').value,
         cognome: document.getElementById('cognome').value,
@@ -96,35 +102,34 @@
         mezzi: mezzi || "Nessuno"
       };
 
-      // Validazione minima
+   
       if(!nuovoUtente.nome || !nuovoUtente.cognome) {
         alert("Inserisci almeno Nome e Cognome!");
         return;
       }
 
-      // Prelevo la collection esistente o ne creo una nuova
       let utenti = JSON.parse(localStorage.getItem('archivioUtenti')) || [];
       
-      // Aggiungo l'utente alla collection
+    
       utenti.push(nuovoUtente);
 
-      // Salvo la stringa JSON nel localStorage
+     
       localStorage.setItem('archivioUtenti', JSON.stringify(utenti));
 
-      // Reset form e aggiornamento tabella
+      
       document.getElementById('anagraficaForm').reset();
       mostraDati();
     }
 
-    // Funzione per leggere dal LocalStorage e stampare la tabella
+
     function mostraDati() {
       const tbody = document.getElementById('corpoTabella');
-      tbody.innerHTML = ""; // Pulisco la tabella prima di ricaricare
+      tbody.innerHTML = ""; 
 
-      // Prelevo e converto i dati
+      
       const utenti = JSON.parse(localStorage.getItem('archivioUtenti')) || [];
 
-      // Genero le righe dinamicamente
+      
       utenti.forEach(u => {
         let riga = `<tr>
           <td>${u.nome}</td>
@@ -147,7 +152,7 @@
       }
     }
 
-    // Carico i dati esistenti all'avvio della pagina
+   
     window.onload = mostraDati;
   </script>
 
