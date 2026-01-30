@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Anagrafica Completa</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; line-height: 1.6; }
+    .sezione { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background-color: #f4f4f4; }
+    button { cursor: pointer; padding: 8px 15px; margin-top: 10px; }
+    .btn-salva { background-color: #28a745; color: white; border: none; }
+    .btn-svuota { background-color: #dc3545; color: white; border: none; }
+  </style>
+</head>
+<body>
+
+  <!-- SEZIONE 1: INPUT DATI -->
+  <div class="sezione">
+    <h2>Inserisci Anagrafica Utente</h2>
+    <form id="anagraficaForm">
+      <input type="text" id="nome" placeholder="Nome" required>
+      <input type="text" id="cognome" placeholder="Cognome" required>
+      
+      <label>Sesso:</label>
+      <input type="radio" name="sesso" value="Maschio" checked> Maschio
+      <input type="radio" name="sesso" value="Femmina"> Femmina
+      <input type="radio" name="sesso" value="Altro"> Altro
+
+      <label>Indirizzo e Residenza:</label>
+      <input type="text" id="indirizzo" placeholder="Via/Piazza" required>
+      <input type="text" id="citta" placeholder="Città" required>
+      <input type="text" id="cap" placeholder="CAP" required>
+
+      <label>Data di nascita:</label>
+      <input type="date" id="dataNascita" required>
+
+      <label>Mezzi di trasporto:</label>
+      <input type="checkbox" name="mezzo" value="Auto"> Auto
+      <input type="checkbox" name="mezzo" value="Bici"> Bici
+      <input type="checkbox" name="mezzo" value="Cavallo"> Cavallo
+
+      <label>Provincia:</label>
+      <select id="provincia">
+          <option value="Milano">Milano</option>
+          <option value="Torino">Torino</option>
+          <option value="Napoli">Napoli</option>
+      </select>
+
+      <br>
+      <button type="button" class="btn-salva" onclick="salvaDati()">Registra Utente</button>
+    </form>
+  </div>
+
+  <!-- SEZIONE 2: OUTPUT TABELLA -->
+  <div class="sezione">
+    <h2>Tabella Utenti Registrati (da LocalStorage)</h2>
+    <table id="tabellaUtenti">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Cognome</th>
+          <th>Sesso</th>
+          <th>Indirizzo</th>
+          <th>Città</th>
+          <th>Provincia</th>
+          <th>Nascita</th>
+          <th>Mezzi</th>
+        </tr>
+      </thead>
+      <tbody id="corpoTabella"></tbody>
+    </table>
+    <button class="btn-svuota" onclick="svuotaDati()">Svuota Archivio</button>
+  </div>
+
+  <script>
+    // Funzione per salvare nel LocalStorage
+    function salvaDati() {
+      // Recupero i checkbox selezionati
+      let mezzi = Array.from(document.querySelectorAll('input[name="mezzo"]:checked'))
+                       .map(cb => cb.value)
+                       .join(', ');
+
+      // Creo l'oggetto utente
+      const nuovoUtente = {
+        nome: document.getElementById('nome').value,
+        cognome: document.getElementById('cognome').value,
+        sesso: document.querySelector('input[name="sesso"]:checked').value,
+        indirizzo: document.getElementById('indirizzo').value,
+        citta: document.getElementById('citta').value,
+        cap: document.getElementById('cap').value,
+        data: document.getElementById('dataNascita').value,
+        provincia: document.getElementById('provincia').value,
+        mezzi: mezzi || "Nessuno"
+      };
+
+      // Validazione minima
+      if(!nuovoUtente.nome || !nuovoUtente.cognome) {
+        alert("Inserisci almeno Nome e Cognome!");
+        return;
+      }
+
+      // Prelevo la collection esistente o ne creo una nuova
+      let utenti = JSON.parse(localStorage.getItem('archivioUtenti')) || [];
+      
+      // Aggiungo l'utente alla collection
+      utenti.push(nuovoUtente);
+
+      // Salvo la stringa JSON nel localStorage
+      localStorage.setItem('archivioUtenti', JSON.stringify(utenti));
+
+      // Reset form e aggiornamento tabella
+      document.getElementById('anagraficaForm').reset();
+      mostraDati();
+    }
+
+    // Funzione per leggere dal LocalStorage e stampare la tabella
+    function mostraDati() {
+      const tbody = document.getElementById('corpoTabella');
+      tbody.innerHTML = ""; // Pulisco la tabella prima di ricaricare
+
+      // Prelevo e converto i dati
+      const utenti = JSON.parse(localStorage.getItem('archivioUtenti')) || [];
+
+      // Genero le righe dinamicamente
+      utenti.forEach(u => {
+        let riga = `<tr>
+          <td>${u.nome}</td>
+          <td>${u.cognome}</td>
+          <td>${u.sesso}</td>
+          <td>${u.indirizzo}</td>
+          <td>${u.citta} (${u.cap})</td>
+          <td>${u.provincia}</td>
+          <td>${u.data}</td>
+          <td>${u.mezzi}</td>
+        </tr>`;
+        tbody.innerHTML += riga;
+      });
+    }
+
+    function svuotaDati() {
+      if(confirm("Vuoi davvero cancellare tutto?")) {
+        localStorage.removeItem('archivioUtenti');
+        mostraDati();
+      }
+    }
+
+    // Carico i dati esistenti all'avvio della pagina
+    window.onload = mostraDati;
+  </script>
+
+</body>
+</html>
