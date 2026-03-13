@@ -8,7 +8,7 @@
 </head>
 <body>
     <table id="tabellas"> </table><br>
-    <input type="button" value="Indietro" onclick="window.location.href = './index.html'">
+    <input type="button" value="Indietro" onclick="window.location.href = './anagrafica6Stampa.html'">
     <script>
         let tabella = document.getElementById("tabellas")
         let persona = JSON.parse(localStorage.getItem("persone"));
@@ -27,34 +27,34 @@
             let t12 = document.createElement("th");
             let t13 = document.createElement("th");
             let t14 = document.createElement("th");
-            thead1.innerHTML = "Nome"
-            thead2.innerHTML = "Cognome"
-            thead3.innerHTML = "Email"
-            thead4.innerHTML = "Codice fiscale"
-            thead5.innerHTML = "Sesso"
-            thead6.innerHTML = "Veicoli"
-            thead7.innerHTML = "Indirizzo"
-            thead8.innerHTML = "Città"
-            thead9.innerHTML = "Provincia"
-            thead10.innerHTML = "CAP"
-            thead11.innerHTML = "Età"
-            thead12.innerHTML = "Materia Preferita"
-            thead13.innerHTML = "Generazione"
-            thead14.innerHTML = "Cancella";
-            tabella.appendChild(thead1)
-            tabella.appendChild(thead2)
-            tabella.appendChild(thead3)
-            tabella.appendChild(thead4)
-            tabella.appendChild(thead5)
-            tabella.appendChild(thead6)
-            tabella.appendChild(thead7)
-            tabella.appendChild(thead8)
-            tabella.appendChild(thead9)
-            tabella.appendChild(thead10)
-            tabella.appendChild(thead11)
-            tabella.appendChild(thead12)
-            tabella.appendChild(thead13)
-            tabella.appendChild(thead14)
+            t1.innerHTML = "Nome"
+            t2.innerHTML = "Cognome"
+            t3.innerHTML = "Email"
+            t4.innerHTML = "Codice fiscale"
+            t5.innerHTML = "Sesso"
+            t6.innerHTML = "Veicoli"
+            t7.innerHTML = "Indirizzo"
+            t8.innerHTML = "Città"
+            t9.innerHTML = "Provincia"
+            t10.innerHTML = "CAP"
+            t11.innerHTML = "Età"
+            t12.innerHTML = "Materia Preferita"
+            t13.innerHTML = "Generazione"
+            t14.innerHTML = "Cancella";
+            tabella.appendChild(t1)
+            tabella.appendChild(t2)
+            tabella.appendChild(t3)
+            tabella.appendChild(t4)
+            tabella.appendChild(t5)
+            tabella.appendChild(t6)
+            tabella.appendChild(t7)
+            tabella.appendChild(t8)
+            tabella.appendChild(t9)
+            tabella.appendChild(t10)
+            tabella.appendChild(t11)
+            tabella.appendChild(t12)
+            tabella.appendChild(t13)
+            tabella.appendChild(t14)
         } 
         
         for (let i = 0; i < persona.length; i++) {
@@ -77,7 +77,7 @@
             let buttons = document.createElement("button");
             
             buttons.setAttribute('id', i);
-            buttons.innerHTML =  "🚮";
+            buttons.innerHTML =  "cancella";
             function onClick() {
                 cancellas(buttons.getAttribute("id"))
             }
