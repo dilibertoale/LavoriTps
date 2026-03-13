@@ -9,16 +9,16 @@
     <div class="a">
         <div class="inputs">
             <label for="nome">Nome</label><br>  
-            <input type="text" id="nome" name="nome"><p id="feedback_nome"></p>
+            <input type="text" id="nome" name="nome"><p id="prova_nome"></p>
             
             <label for="cognome">Cognome</label><br>
-            <input type="text" id="cognome" name="cognome"><p id="feedback_cognome"></p>
+            <input type="text" id="cognome" name="cognome"><p id="prova_cognome"></p>
             
             <label for="email">Email</label><br>
-            <input type="email" name="email" id="email"><p id="feedback_email"></p>
+            <input type="email" name="email" id="email"><p id="prova_email"></p>
             
             <label for="codice_fiscale">Codice fiscale</label><br>
-            <input type="text" name="codice_fiscale" id="codice_fiscale"><p id="feedback_fiscale"></p>
+            <input type="text" name="codice_fiscale" id="codice_fiscale"><p id="prova_fiscale"></p>
             
             <label for="sesso">Sesso</label><br>
             <input type="radio" name="sesso" id="sesso" value="Maschio">
@@ -52,7 +52,7 @@
             </datalist>
             <label for="cap">CAP</label><br>
             <input type="text" name="cap" id="cap">
-            <p id="feedback_cap"></p>    
+            <p id="prova_cap"></p>    
             <label for="eta">Data di nascita</label><br>
             <input type="date" name="eta" id="eta"><br> 
 
@@ -83,11 +83,11 @@ if (localStorage.getItem("persone") === null) {
 function funzione() {
     
     
-    let feedback_nome = document.getElementById("feedback_nome");
-    let feedback_cognome = document.getElementById("feedback_cognome");
-    let feedback_email = document.getElementById("feedback_email");
-    let feedback_fiscale = document.getElementById("feedback_fiscale");
-    let feedback_cap = document.getElementById("feedback_cap");
+    let prova_nome = document.getElementById("prova_nome");
+    let prova_cognome = document.getElementById("prova_cognome");
+    let prova_email = document.getElementById("prova_email");
+    let prova_fiscale = document.getElementById("prova_fiscale");
+    let prova_cap = document.getElementById("prova_cap");
     const nomeTest = /^[a-zA-ZàèìòùÀÈÌÒÙ\s'-]{2,50}$/u;
     const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     const capTest =/^[A-Za-z0-9\s-]{3,10}$/;
@@ -95,41 +95,41 @@ function funzione() {
     let test = true;
 
     if (nomeTest.test(document.getElementById("nome").value.trim())) {
-        feedback_nome.innerHTML = '';
+        prova_nome.innerHTML = '';
     }
     else{
-        feedback_nome.style.color = "red";
-        feedback_nome.innerHTML = "Nome non valido";
+        prova_nome.style.color = "red";
+        prova_nome.innerHTML = "Nome non valido";
         test = false;
     }
 
     if(nomeTest.test(document.getElementById("cognome").value.trim())){
-        feedback_cognome.innerHTML = '';
+        prova_cognome.innerHTML = '';
     }
     else{
-        feedback_cognome.style.color = "red";
-        feedback_cognome.innerHTML = "Cognome non valido";
+        prova_cognome.style.color = "red";
+        prova_cognome.innerHTML = "Cognome non valido";
         test = false;
     }
     if(capTest.test(document.getElementById("cap").value.trim())){
-        feedback_cap.innerHTML = ''
+        prova_cap.innerHTML = ''
     }else{
-        feedback_cap.style.color = "red";
-        feedback_cap.innerHTML = "CAP non valido";
+        prova_cap.style.color = "red";
+        prova_cap.innerHTML = "CAP non valido";
         test = false;
     }
     if(emailTest.test(document.getElementById("email").value.trim())){
-        feedback_email.innerHTML = '';
+        prova_email.innerHTML = '';
     }else{
-        feedback_email.style.color = "red";
-        feedback_email.innerHTML = "Email non valida";
+        prova_email.style.color = "red";
+        prova_email.innerHTML = "Email non valida";
         test = false;
     }
     if(fiscaleTest.test(document.getElementById("codice_fiscale").value.trim())){
-        feedback_fiscale.innerHTML = '';
+        prova_fiscale.innerHTML = '';
     }else{
-        feedback_fiscale.style.color = "red";
-        feedback_fiscale.innerHTML = "Codice fiscale non valido";
+        prova_fiscale.style.color = "red";
+        prova_fiscale.innerHTML = "Codice fiscale non valido";
         test = false;
     }
 
@@ -140,12 +140,12 @@ function funzione() {
 } 
 
 function creaPersona(){
-    let gender = undefined;
+    let sesso = undefined;
     let veicoli = [];
     let materia = [];
     for(i=0;i<document.getElementsByName("sesso").length;i++) {
         if(document.getElementsByName("sesso")[i].checked){
-            gender = document.getElementsByName("sesso")[i].value
+            sesso = document.getElementsByName("sesso")[i].value
         }
     }
 
@@ -161,8 +161,8 @@ function creaPersona(){
     }
         
     
-    if(gender == undefined){
-        gender = "non impostato"
+    if(sesso == undefined){
+        sesso = "non impostato"
         console.log("no")
     }
 
@@ -171,7 +171,7 @@ function creaPersona(){
         cognome: document.getElementById("cognome").value.trim(),
         email: document.getElementById("email").value.trim(),
         fiscale: document.getElementById("codice_fiscale").value.trim(),
-        sesso: gender,
+        sesso: sesso,
         veicoli: veicoli.join(", "),
         indirizzo: document.getElementById("indirizzo").value.trim(),
         citta: document.getElementById("citta").value.trim(),
@@ -232,7 +232,7 @@ function creaPersona(){
 
 function cancella(){
     if(persone.length > 0){
-        alert("Dati Cancellati");
+        alert("Dati eliminati");
     } else {
         alert("Dati non presenti");
     }
@@ -246,7 +246,7 @@ function controllo(){
         window.location.href = "./anagrafica6Stampa.html";
     }
     else {
-        alert("Dati non presenti")
+        alert("Dati inesistenti")
     }
 }
     </script>
