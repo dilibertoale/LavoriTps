@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Archivio Dati Registrati</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f7f6; }
+        h2 { color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #34495e; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+        .btn-back { margin-bottom: 20px; padding: 10px 15px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; }
+        .no-dati { padding: 20px; color: #7f8c8d; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="btn-back">⬅ Torna al Modulo</a>
+    
+    <h2>Elenco Utenti in Archivio</h2>
+
+    <div id="tabella_contenitore">
+        </div>
+
+    <script>
+        function caricaTabella() {
+            
+            let datiSalvati = JSON.parse(localStorage.getItem("db_persone")) || [];
+            let contenitore = document.getElementById("tabella_contenitore");
+
+            if (datiSalvati.length === 0) {
+                contenitore.innerHTML = "<p class='no-dati'>Nessun dato trovato nell'archivio.</p>";
+                return;
+            }
+
+            
+            let htmlTabella = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Cognome</th>
+                            <th>CAP</th>
+                            <th>Email</th>
+                            <th>Codice Fiscale</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            
+            datiSalvati.forEach(persona => {
+                htmlTabella += `
+                    <tr>
+                        <td>${persona.nome}</td>
+                        <td>${persona.cognome}</td>
+                        <td>${persona.cap}</td>
+                        <td>${persona.email}</td>
+                        <td>${persona.fiscale}</td>
+                    </tr>
+                `;
+            });
+
+            htmlTabella += "</tbody></table>";
+            contenitore.innerHTML = htmlTabella;
+        }
+
+       
+        window.onload = caricaTabella;
+    </script>
+</body>
+</html>
