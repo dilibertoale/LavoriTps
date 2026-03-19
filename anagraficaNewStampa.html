@@ -2,72 +2,119 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Archivio Dati Registrati</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dati Registrati</title>
+
     <style>
-        body { font-family: sans-serif; padding: 20px; background-color: #f4f7f6; }
-        h2 { color: #2c3e50; }
-        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #34495e; color: white; }
-        tr:hover { background-color: #f1f1f1; }
-        .btn-back { margin-bottom: 20px; padding: 10px 15px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; }
-        .no-dati { padding: 20px; color: #7f8c8d; font-style: italic; }
+        body {
+            font-family: sans-serif;
+            background-color: #f4f7f6;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            background: #27ae60;
+            color: white;
+            padding: 8px 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="btn-back">⬅ Torna al Modulo</a>
-    
-    <h2>Elenco Utenti in Archivio</h2>
+    <a href="./anagraficaNew.html">Torna al Modulo</a>
 
-    <div id="tabella_contenitore">
-        </div>
+    <h1>Elenco Utenti</h1>
+
+    <div id="contenitore_tabella"></div>
 
     <script>
-        function caricaTabella() {
-            
-            let datiSalvati = JSON.parse(localStorage.getItem("db_persone")) || [];
-            let contenitore = document.getElementById("tabella_contenitore");
+        let listaPersone = JSON.parse(localStorage.getItem("persone"));
+        let contenitoreTabella = document.getElementById("contenitore_tabella");
+        let tabella = document.createElement("table");
 
-            if (datiSalvati.length === 0) {
-                contenitore.innerHTML = "<p class='no-dati'>Nessun dato trovato nell'archivio.</p>";
-                return;
-            }
+        
+        let rigaTitoli = document.createElement("tr");
 
-            
-            let htmlTabella = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Cognome</th>
-                            <th>CAP</th>
-                            <th>Email</th>
-                            <th>Codice Fiscale</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+        let colonnaNome = document.createElement("th");
+        colonnaNome.innerHTML = "Nome";
+        rigaTitoli.appendChild(colonnaNome);
 
-            
-            datiSalvati.forEach(persona => {
-                htmlTabella += `
-                    <tr>
-                        <td>${persona.nome}</td>
-                        <td>${persona.cognome}</td>
-                        <td>${persona.cap}</td>
-                        <td>${persona.email}</td>
-                        <td>${persona.fiscale}</td>
-                    </tr>
-                `;
-            });
+        let colonnaCognome = document.createElement("th");
+        colonnaCognome.innerHTML = "Cognome";
+        rigaTitoli.appendChild(colonnaCognome);
 
-            htmlTabella += "</tbody></table>";
-            contenitore.innerHTML = htmlTabella;
+        let colonnaCap = document.createElement("th");
+        colonnaCap.innerHTML = "CAP";
+        rigaTitoli.appendChild(colonnaCap);
+
+        let colonnaEmail = document.createElement("th");
+        colonnaEmail.innerHTML = "Email";
+        rigaTitoli.appendChild(colonnaEmail);
+
+        let colonnaFiscale = document.createElement("th");
+        colonnaFiscale.innerHTML = "Codice Fiscale";
+        rigaTitoli.appendChild(colonnaFiscale);
+
+        tabella.appendChild(rigaTitoli);
+
+        
+        for (let i = 0; i < listaPersone.length; i++) {
+            let rigaPersona = document.createElement("tr");
+
+            let datoNome = document.createElement("td");
+            datoNome.innerHTML = listaPersone[i].nome;
+            rigaPersona.appendChild(datoNome);
+
+            let datoCognome = document.createElement("td");
+            datoCognome.innerHTML = listaPersone[i].cognome;
+            rigaPersona.appendChild(datoCognome);
+
+            let datoCap = document.createElement("td");
+            datoCap.innerHTML = listaPersone[i].cap;
+            rigaPersona.appendChild(datoCap);
+
+            let datoEmail = document.createElement("td");
+            datoEmail.innerHTML = listaPersone[i].email;
+            rigaPersona.appendChild(datoEmail);
+
+            let datoFiscale = document.createElement("td");
+            datoFiscale.innerHTML = listaPersone[i].fiscale;
+            rigaPersona.appendChild(datoFiscale);
+
+            tabella.appendChild(rigaPersona);
         }
 
-       
-        window.onload = caricaTabella;
+        contenitoreTabella.appendChild(tabella);
     </script>
+
 </body>
 </html>
