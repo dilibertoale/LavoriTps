@@ -2,69 +2,140 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Anagrafica Utente - Validazione Avanzata</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anagrafica 6 - No Label</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; background-color: #f4f7f6; }
-        .box-input { margin-bottom: 12px; }
-        .errore { color: red; font-size: 13px; font-weight: bold; display: block; margin-top: 2px; }
-        fieldset { border: 2px solid #34495e; background-color: white; padding: 20px; border-radius: 8px; }
-        legend { font-weight: bold; color: #34495e; }
-        input[type="text"], input[type="email"] { width: 250px; padding: 5px; }
-        .btn-container { margin-top: 15px; }
+        .errore-testo { color: red; margin: 0; padding-bottom: 10px; font-size: 14px; min-height: 20px; }
+        input { margin-bottom: 5px; width: 250px; padding: 8px; }
+        .inputs { margin: 20px; }
     </style>
 </head>
 <body>
 
-    <fieldset>
-        <legend>Modulo Registrazione Dati</legend>
-
-        <div class="box-input">
-            <label for="nome">Nome:</label><br>
-            <input type="text" id="nome">
-            <span id="prova_nome" class="errore"></span>
-        </div>
-
-        <div class="box-input">
-            <label for="cognome">Cognome:</label><br>
-            <input type="text" id="cognome">
-            <span id="prova_cognome" class="errore"></span>
-        </div>
-
-        <div class="box-input">
-            <label for="cap">CAP (5 numeri):</label><br>
-            <input type="text" id="cap" maxlength="5">
-            <span id="prova_cap" class="errore"></span>
-        </div>
-
-        <div class="box-input">
-            <label for="email">Email:</label><br>
-            <input type="email" id="email">
-            <span id="prova_email" class="errore"></span>
-        </div>
-
-        <div class="box-input">
-            <label for="codice_fiscale">Codice Fiscale:</label><br>
-            <input type="text" id="codice_fiscale" style="text-transform: uppercase;">
-            <span id="prova_fiscale" class="errore"></span>
-        </div>
-
-        <div class="btn-container">
-            <input type="button" value="Inserisci dati" onclick="validazione()">
-            <input type="button" value="Controlla dati" onclick="vaiAStampa()">
-            <input type="button" value="Cancella archivio" onclick="svuota()">
-        </div>
-    </fieldset>
+    <div class="inputs">
+        <input type="text" id="nome" placeholder="Inserisci Nome">
+        <p id="prova_nome" class="errore-testo"></p>
+        
+        <input type="text" id="cognome" placeholder="Inserisci Cognome">
+        <p id="prova_cognome" class="errore-testo"></p>
+        
+        <input type="text" id="cap" placeholder="Inserisci CAP (5 cifre)">
+        <p id="prova_cap" class="errore-testo"></p>
+        
+        <input type="email" id="email" placeholder="Inserisci Email">
+        <p id="prova_email" class="errore-testo"></p>
+        
+        <input type="text" id="codice_fiscale" placeholder="Codice Fiscale" style="text-transform: uppercase;">
+        <p id="prova_fiscale" class="errore-testo"></p>
+        
+        <br>
+        <input type="button" value="Inserisci dati" onclick="funzione()">
+        <br><br>
+        <input type="button" value="Controlla dati" onclick="controllo()">
+        <br><br>
+        <input type="button" value="Cancella dati" onclick="cancella()">
+    </div>
 
     <script>
-        // Inizializzazione archivio da LocalStorage
-        let archivio;
-        if (localStorage.getItem("db_persone") === null) {
-            archivio = [];
+        let persone;
+        if (localStorage.getItem("persone") === null) {
+            persone = []; 
         } else {
-            archivio = JSON.parse(localStorage.getItem("db_persone"));
+            persone = JSON.parse(localStorage.getItem("persone"));
         }
 
-        function validazione() {
-            // Riferimenti ai messaggi di errore
-            let p_nome = document.getElementById("prova_nome");
-            let p_cognome = document
+        function funzione() {
+            let prova_nome = document.getElementById("prova_nome");
+            let prova_cognome = document.getElementById("prova_cognome");
+            let prova_cap = document.getElementById("prova_cap");
+            let prova_email = document.getElementById("prova_email");
+            let prova_fiscale = document.getElementById("prova_fiscale");
+
+            const nomeTest = /^[a-zA-Z\s]{2,50}$/;
+            const capTest = /^\d{5}$/; 
+            const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const fiscaleTest = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/;
+
+            let test = true;
+
+           
+            if (nomeTest.test(document.getElementById("nome").value.trim())) {
+                prova_nome.innerHTML = '';
+            } else {
+                prova_nome.innerHTML = "Nome non valido";
+                test = false;
+            }
+
+            
+            if (nomeTest.test(document.getElementById("cognome").value.trim())) {
+                prova_cognome.innerHTML = '';
+            } else {
+                prova_cognome.innerHTML = "Cognome non valido";
+                test = false;
+            }
+
+            
+            if (capTest.test(document.getElementById("cap").value.trim())) {
+                prova_cap.innerHTML = '';
+            } else {
+                prova_cap.innerHTML = "CAP non valido (5 numeri)";
+                test = false;
+            }
+
+            
+            if (emailTest.test(document.getElementById("email").value.trim())) {
+                prova_email.innerHTML = '';
+            } else {
+                prova_email.innerHTML = "Email non valida";
+                test = false;
+            }
+
+            
+            let cf_val = document.getElementById("codice_fiscale").value.trim().toUpperCase();
+            if (fiscaleTest.test(cf_val)) {
+                prova_fiscale.innerHTML = '';
+            } else {
+                prova_fiscale.innerHTML = "Codice fiscale non valido";
+                test = false;
+            }
+
+            if (test) { creaPersona(); }
+        } 
+
+        function creaPersona() {
+            let persona = {
+                nome: document.getElementById("nome").value.trim(),
+                cognome: document.getElementById("cognome").value.trim(),
+                cap: document.getElementById("cap").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                fiscale: document.getElementById("codice_fiscale").value.trim().toUpperCase()
+            };
+
+            persone.push(persona);
+            localStorage.setItem("persone", JSON.stringify(persone));
+            alert("Dati salvati in LocalStorage!");
+            
+            
+            document.getElementById("nome").value = "";
+            document.getElementById("cognome").value = "";
+            document.getElementById("cap").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("codice_fiscale").value = "";
+        }
+
+        function cancella() {
+            persone = [];
+            localStorage.setItem("persone", JSON.stringify(persone));
+            alert("Dati eliminati");
+        }
+
+        function controllo() {
+            if (persone.length > 0) {
+                window.location.href = "./anagrafica6Stampa.html";
+            } else {
+                alert("Nessun dato in memoria");
+            }
+        }
+    </script>
+</body>
+</html>
