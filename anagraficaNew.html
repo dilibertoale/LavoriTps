@@ -2,141 +2,69 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Archivio Anagrafico Generazionale</title>
+    <title>Anagrafica Utente - Validazione Avanzata</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; line-height: 1.4; }
-        .campo-form { margin-bottom: 15px; }
-        .errore-testo { color: red; font-size: 12px; font-weight: bold; display: block; }
-        .successo { color: green; font-weight: bold; }
-        fieldset { border: 1px solid #ccc; padding: 20px; border-radius: 5px; }
-        legend { padding: 0 10px; font-weight: bold; }
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f7f6; }
+        .box-input { margin-bottom: 12px; }
+        .errore { color: red; font-size: 13px; font-weight: bold; display: block; margin-top: 2px; }
+        fieldset { border: 2px solid #34495e; background-color: white; padding: 20px; border-radius: 8px; }
+        legend { font-weight: bold; color: #34495e; }
+        input[type="text"], input[type="email"] { width: 250px; padding: 5px; }
+        .btn-container { margin-top: 15px; }
     </style>
 </head>
 <body>
 
     <fieldset>
-        <legend>Inserimento Nuova Anagrafica</legend>
+        <legend>Modulo Registrazione Dati</legend>
 
-        <div class="campo-form">
+        <div class="box-input">
             <label for="nome">Nome:</label><br>
             <input type="text" id="nome">
-            <span id="err_nome" class="errore-testo"></span>
+            <span id="prova_nome" class="errore"></span>
         </div>
 
-        <div class="campo-form">
+        <div class="box-input">
             <label for="cognome">Cognome:</label><br>
             <input type="text" id="cognome">
-            <span id="err_cognome" class="errore-testo"></span>
+            <span id="prova_cognome" class="errore"></span>
         </div>
 
-        <div class="campo-form">
-            <label for="data_nascita">Data di Nascita:</label><br>
-            <input type="date" id="data_nascita">
-            <span id="err_data" class="errore-testo"></span>
+        <div class="box-input">
+            <label for="cap">CAP (5 numeri):</label><br>
+            <input type="text" id="cap" maxlength="5">
+            <span id="prova_cap" class="errore"></span>
         </div>
 
-        <input type="button" value="Registra Utente" onclick="validazioneDati()">
-        <input type="button" value="Visualizza Database" onclick="vaiAStampa()">
-        <input type="button" value="Svuota Memoria" onclick="resetDati()">
+        <div class="box-input">
+            <label for="email">Email:</label><br>
+            <input type="email" id="email">
+            <span id="prova_email" class="errore"></span>
+        </div>
+
+        <div class="box-input">
+            <label for="codice_fiscale">Codice Fiscale:</label><br>
+            <input type="text" id="codice_fiscale" style="text-transform: uppercase;">
+            <span id="prova_fiscale" class="errore"></span>
+        </div>
+
+        <div class="btn-container">
+            <input type="button" value="Inserisci dati" onclick="validazione()">
+            <input type="button" value="Controlla dati" onclick="vaiAStampa()">
+            <input type="button" value="Cancella archivio" onclick="svuota()">
+        </div>
     </fieldset>
 
-    <div id="feedback" style="margin-top: 20px;"></div>
-
     <script>
-        
-        let listaUtenti = JSON.parse(localStorage.getItem("db_utenti")) || [];
-
-        function validazioneDati() {
-            
-            let sp_nome = document.getElementById("err_nome");
-            let sp_cognome = document.getElementById("err_cognome");
-            let sp_data = document.getElementById("err_data");
-            
-            
-            let v_nome = document.getElementById("nome").value.trim();
-            let v_cognome = document.getElementById("cognome").value.trim();
-            let v_data = document.getElementById("data_nascita").value;
-
-           
-            const regexSoloLettere = /^[a-zA-Z\sàèìòùÀÈÌÒÙ]+$/;
-            
-            let semaforoVerde = true;
-
-            
-            if (regexSoloLettere.test(v_nome) && v_nome.length >= 2) {
-                sp_nome.innerHTML = "";
-            } else {
-                sp_nome.innerHTML = "Errore: inserire solo lettere (min 2)";
-                semaforoVerde = false;
-            }
-
-          
-            if (regexSoloLettere.test(v_cognome) && v_cognome.length >= 2) {
-                sp_cognome.innerHTML = "";
-            } else {
-                sp_cognome.innerHTML = "Errore: inserire solo lettere (min 2)";
-                semaforoVerde = false;
-            }
-
-            if (v_data !== "") {
-                sp_data.innerHTML = "";
-            } else {
-                sp_data.innerHTML = "Selezionare una data valida";
-                semaforoVerde = false;
-            }
-
-           
-            if (semaforoVerde) {
-                salvaDati(v_nome, v_cognome, v_data);
-            }
+        // Inizializzazione archivio da LocalStorage
+        let archivio;
+        if (localStorage.getItem("db_persone") === null) {
+            archivio = [];
+        } else {
+            archivio = JSON.parse(localStorage.getItem("db_persone"));
         }
 
-        function salvaDati(nome, cognome, dataCompleta) {
-            let annoNascita = new Date(dataCompleta).getFullYear();
-            let gen = "";
-
-            
-            if (annoNascita >= 1901 && annoNascita <= 1927) gen = "Greatest Generation";
-            else if (annoNascita >= 1928 && annoNascita <= 1945) gen = "Generazione Silenziosa";
-            else if (annoNascita >= 1946 && annoNascita <= 1964) gen = "Baby Boomers";
-            else if (annoNascita >= 1965 && annoNascita <= 1980) gen = "Generazione X";
-            else if (annoNascita >= 1981 && annoNascita <= 1996) gen = "Millennials";
-            else if (annoNascita >= 1997 && annoNascita <= 2012) gen = "Generazione Z";
-            else if (annoNascita >= 2013) gen = "Generazione Alpha";
-            else gen = "Data fuori intervallo";
-
-          
-            let nuovoProfilo = {
-                nomeUtente: nome,
-                cognomeUtente: cognome,
-                nascita: annoNascita,
-                categoria: gen,
-                dataRegistrazione: new Date().toLocaleDateString()
-            };
-
-          
-            listaUtenti.push(nuovoProfilo);
-            localStorage.setItem("db_utenti", JSON.stringify(listaUtenti));
-
-            document.getElementById("feedback").innerHTML = "<span class='successo'>Utente salvato correttamente nell'archivio!</span>";
-        }
-
-        function resetDati() {
-            if (confirm("Vuoi cancellare tutto l'archivio?")) {
-                localStorage.removeItem("db_utenti");
-                listaUtenti = [];
-                location.reload(); 
-            }
-        }
-
-        function vaiAStampa() {
-            if (listaUtenti.length > 0) {
-                alert("Caricamento database in corso...");
-               
-            } else {
-                alert("Nessun dato presente in memoria.");
-            }
-        }
-    </script>
-</body>
-</html>
+        function validazione() {
+            // Riferimenti ai messaggi di errore
+            let p_nome = document.getElementById("prova_nome");
+            let p_cognome = document
