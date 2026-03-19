@@ -3,107 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anagrafica 6 - No Label</title>
+    <title>Anagrafica 6</title>
+
     <style>
-        .errore-testo { color: red; margin: 0; padding-bottom: 10px; font-size: 14px; min-height: 20px; }
-        input { margin-bottom: 5px; width: 250px; padding: 8px; }
-        .inputs { margin: 20px; }
+        body {
+            font-family: sans-serif;
+            background-color: #f4f7f6;
+            padding: 20px;
+        }
+
+        .dati {
+            background: white;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            color: #1d2630;
+            margin-bottom: 4px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+        }
+
+        .errore-testo {
+            color: red;
+            margin: 0;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        input[type="button"] {
+            background-color: #34495e;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: #2c3e50;
+        }
     </style>
 </head>
 <body>
 
-    <div class="inputs">
-        <input type="text" id="nome" placeholder="Inserisci Nome">
-        <p id="prova_nome" class="errore-testo"></p>
-        
-        <input type="text" id="cognome" placeholder="Inserisci Cognome">
-        <p id="prova_cognome" class="errore-testo"></p>
-        
-        <input type="text" id="cap" placeholder="Inserisci CAP (5 cifre)">
-        <p id="prova_cap" class="errore-testo"></p>
-        
-        <input type="email" id="email" placeholder="Inserisci Email">
-        <p id="prova_email" class="errore-testo"></p>
-        
-        <input type="text" id="codice_fiscale" placeholder="Codice Fiscale" style="text-transform: uppercase;">
-        <p id="prova_fiscale" class="errore-testo"></p>
-        
+    <div class="dati">
+        <label for="nome">Inserisci Nome</label>
+        <input type="text" id="nome" >
+        <p id="errore_nome" class="errore-testo"></p>
+        <label for="cognome">Inserisci Cognome</label>
+        <input type="text" id="cognome">
+        <p id="errore_cognome" class="errore-testo"></p>
+        <label for="cap">Inserisci Cap</label>
+        <input type="text" id="cap">
+        <p id="errore_cap" class="errore-testo"></p>
+        <label for="email">Inserisci Email</label>
+        <input type="email" id="email">
+        <p id="errore_email" class="errore-testo"></p>
+        <label for="codice_fiscale">Inserisci Codice Fiscale</label>
+        <input type="text" id="codice_fiscale">
+        <p id="errore_fiscale" class="errore-testo"></p>
+
         <br>
-        <input type="button" value="Inserisci dati" onclick="funzione()">
+        <input type="button" value="Inserisci dati" onclick="controllaDati()">
         <br><br>
-        <input type="button" value="Controlla dati" onclick="controllo()">
+        <input type="button" value="Controlla dati" onclick="apriDati()">
         <br><br>
-        <input type="button" value="Cancella dati" onclick="cancella()">
+        <input type="button" value="Cancella dati" onclick="cancellaDati()">
     </div>
 
     <script>
-        let persone;
+        let listaPersone;
+
         if (localStorage.getItem("persone") === null) {
-            persone = []; 
+            listaPersone = [];
         } else {
-            persone = JSON.parse(localStorage.getItem("persone"));
+            listaPersone = JSON.parse(localStorage.getItem("persone"));
         }
 
-        function funzione() {
-            let prova_nome = document.getElementById("prova_nome");
-            let prova_cognome = document.getElementById("prova_cognome");
-            let prova_cap = document.getElementById("prova_cap");
-            let prova_email = document.getElementById("prova_email");
-            let prova_fiscale = document.getElementById("prova_fiscale");
+        function controllaDati() {
+            let erroreNome = document.getElementById("errore_nome");
+            let erroreCognome = document.getElementById("errore_cognome");
+            let erroreCap = document.getElementById("errore_cap");
+            let erroreEmail = document.getElementById("errore_email");
+            let erroreFiscale = document.getElementById("errore_fiscale");
+            const regexNome = /^[a-zA-Z\s]{2,50}$/;
+            const regexCap = /^\d{5}$/;
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const regexFiscale = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/;
+            let datiCorretti = true;
 
-            const nomeTest = /^[a-zA-Z\s]{2,50}$/;
-            const capTest = /^\d{5}$/; 
-            const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const fiscaleTest = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/;
-
-            let test = true;
-
-           
-            if (nomeTest.test(document.getElementById("nome").value.trim())) {
-                prova_nome.innerHTML = '';
+            if (regexNome.test(document.getElementById("nome").value.trim())) {
+                erroreNome.innerHTML = '';
             } else {
-                prova_nome.innerHTML = "Nome non valido";
-                test = false;
+                erroreNome.innerHTML = "Nome invalido";
+                datiCorretti = false;
             }
 
-            
-            if (nomeTest.test(document.getElementById("cognome").value.trim())) {
-                prova_cognome.innerHTML = '';
+            if (regexNome.test(document.getElementById("cognome").value.trim())) {
+                erroreCognome.innerHTML = '';
             } else {
-                prova_cognome.innerHTML = "Cognome non valido";
-                test = false;
+                erroreCognome.innerHTML = "Cognome invalido";
+                datiCorretti = false;
             }
 
-            
-            if (capTest.test(document.getElementById("cap").value.trim())) {
-                prova_cap.innerHTML = '';
+            if (regexCap.test(document.getElementById("cap").value.trim())) {
+                erroreCap.innerHTML = '';
             } else {
-                prova_cap.innerHTML = "CAP non valido (5 numeri)";
-                test = false;
+                erroreCap.innerHTML = "CAP invalido";
+                datiCorretti = false;
             }
 
-            
-            if (emailTest.test(document.getElementById("email").value.trim())) {
-                prova_email.innerHTML = '';
+            if (regexEmail.test(document.getElementById("email").value.trim())) {
+                erroreEmail.innerHTML = '';
             } else {
-                prova_email.innerHTML = "Email non valida";
-                test = false;
+                erroreEmail.innerHTML = "Email invalido";
+                datiCorretti = false;
             }
 
-            
-            let cf_val = document.getElementById("codice_fiscale").value.trim().toUpperCase();
-            if (fiscaleTest.test(cf_val)) {
-                prova_fiscale.innerHTML = '';
+            let codiceFiscale = document.getElementById("codice_fiscale").value.trim().toUpperCase();
+
+            if (regexFiscale.test(codiceFiscale)) {
+                erroreFiscale.innerHTML = '';
             } else {
-                prova_fiscale.innerHTML = "Codice fiscale non valido";
-                test = false;
+                erroreFiscale.innerHTML = "Codice fiscale invalido";
+                datiCorretti = false;
             }
 
-            if (test) { creaPersona(); }
-        } 
+            if (datiCorretti) {
+                salvaPersona();
+            }
+        }
 
-        function creaPersona() {
-            let persona = {
+        function salvaPersona() {
+            let nuovaPersona = {
                 nome: document.getElementById("nome").value.trim(),
                 cognome: document.getElementById("cognome").value.trim(),
                 cap: document.getElementById("cap").value.trim(),
@@ -111,11 +151,12 @@
                 fiscale: document.getElementById("codice_fiscale").value.trim().toUpperCase()
             };
 
-            persone.push(persona);
-            localStorage.setItem("persone", JSON.stringify(persone));
-            alert("Dati salvati in LocalStorage!");
-            
-            
+            listaPersone.push(nuovaPersona);
+
+            localStorage.setItem("persone", JSON.stringify(listaPersone));
+
+            alert("Dati salvati nel local storage");
+
             document.getElementById("nome").value = "";
             document.getElementById("cognome").value = "";
             document.getElementById("cap").value = "";
@@ -123,19 +164,20 @@
             document.getElementById("codice_fiscale").value = "";
         }
 
-        function cancella() {
-            persone = [];
-            localStorage.setItem("persone", JSON.stringify(persone));
+        function cancellaDati() {
+            listaPersone = [];
+            localStorage.setItem("persone", JSON.stringify(listaPersone));
             alert("Dati eliminati");
         }
 
-        function controllo() {
-            if (persone.length > 0) {
-                window.location.href = "./anagrafica6Stampa.html";
+        function apriDati() {
+            if (listaPersone.length > 0) {
+                window.location.href = "./anagraficaNewStampa.html";
             } else {
                 alert("Nessun dato in memoria");
             }
         }
     </script>
+
 </body>
 </html>
