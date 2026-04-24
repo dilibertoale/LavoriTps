@@ -1,1 +1,35 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <title>
+    Gestione Utenti
+  </title>
+</head>
+<body>
 
+<div class="box">
+  <h2>Inserimento dati</h2>
+
+  <input type="text" id="nome" placeholder="Nome">
+  <p id="err_nome" class="errore"></p>
+
+  <input type="text" id="cognome" placeholder="Cognome">
+  <p id="err_cognome" class="errore"></p>
+
+  <input type="text" id="cap" placeholder="CAP">
+  <p id="err_cap" class="errore"></p>
+
+  <input type="text" id="email" placeholder="Email">
+  <p id="err_email" class="errore"></p>
+
+  <input type="text" id="cf" placeholder="Codice fiscale">
+  <p id="err_cf" class="errore"></p>
+
+  <button onclick="valida()">Salva</button>
+  <button onclick="mostraDati()">Visualizza</button>
+  <button onclick="resetDati()">Cancella tutto</button>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
