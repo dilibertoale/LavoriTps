@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Elenco utenti</title>
+</head>
+<body>
+
+<h2>Utenti salvati</h2>
+<div id="lista"></div>
+
+<script>
+let dati = JSON.parse(localStorage.getItem("utenti")) || [];
+
+let output = "";
+
+dati.forEach(u => {
+  output += `
+    <p>
+      ${u.nome} ${u.cognome} - ${u.email} - ${u.cap}
+    </p>
+  `;
+});
+
+document.getElementById("lista").innerHTML = output;
+</script>
+
+</body>
+</html>
