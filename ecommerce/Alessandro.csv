@@ -1,4 +1,13 @@
-nome, marca, descrizione, immagine, prezzo, dimensioni, taglia
-T-shirt Base,Nike,Maglietta comoda,https://via.placeholder.com/150,25,M,L
-Felpa Hoodie,Adidas,Felpa calda,https://via.placeholder.com/150,60,L,XL
-Jeans Slim,Levis,Jeans aderenti,https://via.placeholder.com/150,80,M,L
+categoria, marca, descrizione, immagine, prezzo, taglia
+T-shirt,Nike,Maglietta comoda,https://via.placeholder.com/150,25,M
+T-shirt,levis,Maglietta comoda,https://via.placeholder.com/150,25,S
+T-shirt,hoodrich,Maglietta comoda,https://via.placeholder.com/150,25,L
+Felpa Hoodie,Adidas,Felpa calda,https://via.placeholder.com/150,60,M
+Felpa Hoodie,mckenzie,Felpa calda,https://via.placeholder.com/150,60,S
+Felpa Hoodie,puma,Felpa calda,https://via.placeholder.com/150,60,L
+Jeans,CalvinKlein,Jeans aderenti,https://via.placeholder.com/150,80,M
+Jeans,CalvinKlein,Jeans aderenti,https://via.placeholder.com/150,80,S
+Jeans,CalvinKlein,Jeans aderenti,https://via.placeholder.com/150,80,L
+giubotti,blauer,invernale,https://via.placeholder.com/150,120,M
+giubotti,blauer,invernale,https://via.placeholder.com/150,120,S
+giubotti,blauer,invernale,https://via.placeholder.com/150,120,L
